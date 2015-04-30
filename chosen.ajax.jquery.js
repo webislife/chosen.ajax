@@ -71,7 +71,7 @@
                 _this.ajaxInited = false;
                 _this.$chosen.find('.chosen-ajax-search').remove();
                 
-                if(_this.dynamicAdd === true) {
+                if(_this.params.dynamicAdd === true) {
                     response.data.push(postData.value);
                 }
 
@@ -86,7 +86,7 @@
             var html = '';
             var selected = this.$select.val();
             if (selected) {
-                //Удаляем все не выбранные
+                //Remove all not selected
                 this.$select.find('option').each(function(index, elem) {
                     var needRemove = true;
                     for (var i = 0, l = selected.length; i < l; i++) {
