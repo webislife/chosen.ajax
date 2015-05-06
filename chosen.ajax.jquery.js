@@ -70,11 +70,12 @@
             }).done(function(response) {
                 _this.ajaxInited = false;
                 _this.$chosen.find('.chosen-ajax-search').remove();
-                
-                if(_this.params.dynamicAdd === true) {
-                    response.data.push(postData.value);
+                if(response.data === null) {
+                    response.data = [];
                 }
-
+                if(_this.params.dynamicAdd === true) {
+                    response.data.push({value: postData.value, name: postData.value});
+                }
                 if (typeof response.data == 'object' && response.data.length > 0) {
                     _this.addElems(response.data);
                 }
@@ -86,11 +87,11 @@
             var html = '';
             var selected = this.$select.val();
             if (selected) {
-                //Remove all not selected
+                //Удаляем все не выбранные
                 this.$select.find('option').each(function(index, elem) {
                     var needRemove = true;
                     for (var i = 0, l = selected.length; i < l; i++) {
-                        if (selected[i] == elem.value) {
+                        if (selected[i] == elem.name) {
                             needRemove = false;
                             break;
                         }
@@ -107,7 +108,7 @@
                 var needAdd = true;
                 if (selected) {
                     for (var i = 0, l = selected.length; i < l; i++) {
-                        if (selected[i] == elem) {
+                        if (selected[i] == elem.name) {
                             needAdd = false;
                             break;
                         }
@@ -115,7 +116,7 @@
                 }
 
                 if (needAdd) {
-                    html += '<option value="' + elem + '">' + elem + '</option>';
+                    html += '<option value="' + elem.value + '">' + elem.name + '</option>';
                 }
             });
 
